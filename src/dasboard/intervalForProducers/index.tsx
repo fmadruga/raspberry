@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {DataTable} from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { DataTable, Title } from 'react-native-paper';
 import Card from '../../components/card';
-import { IProducer, IProducerInterval } from '../../interfaces/producer';
+import { IProducerInterval } from '../../interfaces/producer';
 import { intervalForProducers } from '../../services/requests';
 
 const IntervalForProducers = () => {
-  const [intervals, setIntervals] = useState<IProducer[]>([]);
+  const [intervals, setIntervals] = useState<IProducerInterval | undefined>();
 
   useEffect(() => {
     const fetchIntervals = async () => {
       try {
         const response = await intervalForProducers();
         setIntervals(response);
-        
+
       } catch (error) {
         console.log(error);
       }
@@ -21,24 +21,38 @@ const IntervalForProducers = () => {
     fetchIntervals();
   }, []);
 
-  intervals.map(interval => {
-    console.log(interval.followingWin);
-  });
-  
-  return (
-    <Card title="Producers with longest and shortest interval between wins">
+  const renderDataTable = (data: IProducerInterval['max' | 'min'], title: string) => (
+    <>
+      <Title>{title}</Title>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Win count</DataTable.Title>
+          <DataTable.Title>Producer</DataTable.Title>
+          <DataTable.Title>Interval</DataTable.Title>
+          <DataTable.Title>Previous Year</DataTable.Title>
+          <DataTable.Title>Following Year</DataTable.Title>
         </DataTable.Header>
-        {/* {studios?.map((studio, index) => (
+        {data.map((interval, index) => (
           <DataTable.Row key={index}>
-            <DataTable.Cell>{studio.name}</DataTable.Cell>
-            <DataTable.Cell>{studio.winCount}</DataTable.Cell>
+            <DataTable.Cell>{interval.producer}</DataTable.Cell>
+            <DataTable.Cell>{interval.interval}</DataTable.Cell>
+            <DataTable.Cell>{interval.previousWin}</DataTable.Cell>
+            <DataTable.Cell>{interval.followingWin}</DataTable.Cell>
           </DataTable.Row>
-        )).slice(0,3)} */}
+        ))}
       </DataTable>
+    </>
+
+  )
+
+  return (
+    <Card title="Producers with longest and shortest interval between wins">
+      
+      {intervals && (
+        <>
+          {renderDataTable(intervals.max, 'Maximum')}
+          {renderDataTable(intervals.min, 'Minimun')}
+        </>
+      )}
     </Card>
   );
 };

@@ -5,6 +5,7 @@ import Card from '../components/card';
 import YearsMultipleWinners from './yearsWithMultipleWinners';
 import TopThreeStudios from './topThreeStudios';
 import IntervalForProducers from './intervalForProducers';
+import WinnersByYear from './winnersByYear';
 
 const Dashboard = () => {
   return (
@@ -15,9 +16,7 @@ const Dashboard = () => {
 
       <IntervalForProducers />
 
-      <Card title="Vencedor do ano de">
-        <Text>Dash</Text>
-      </Card>
+      <WinnersByYear />
     </ScreenView>
   );
 };

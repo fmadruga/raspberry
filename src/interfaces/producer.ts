@@ -6,6 +6,6 @@ export interface IProducer {
 }
 
 export interface IProducerInterval {
-  min: IProducer[],
   max: IProducer[],
+  min: IProducer[]
 }
