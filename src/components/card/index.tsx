@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 
-interface ICard {
+export interface ICard {
   title: string;
   children: React.ReactNode;
 }
