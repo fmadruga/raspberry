@@ -27,7 +27,6 @@ const WinnersByYear = () => {
     try {
       const response = await winnersByYear({ year: yearSet });
       setMovies(response);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }

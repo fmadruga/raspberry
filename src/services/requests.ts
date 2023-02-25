@@ -28,3 +28,17 @@ export const winnersByYear = async (filter?: IMovieFilters | null): Promise<IMov
   const response = await api.get(`?winner=true&${queryParams}`);
   return response.data;
 }
+
+export const getMovies = async (filter?: IMovieFilters) => {
+  const {page, size, winner, year} = filter || {};
+
+  let queryParams: string = '';
+  if (page !== undefined) queryParams += `page=${page}&`;
+  if (size !== undefined) queryParams += `size=${size}&`;
+  if (winner !== undefined) queryParams += `winner=${winner}&`;
+  if (year !== undefined) queryParams += `year=${year}&`;
+
+  const response = await api.get(`?${queryParams}`);
+  
+  return response.data;
+}
